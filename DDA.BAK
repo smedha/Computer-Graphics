@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <conio.h>
+#include <graphics.h>
+#include <math.h>
+
+void plotpixels(int x,int y)
+{
+	int h=getmaxy()/2;
+	int w=getmaxx()/2;
+	putpixel(x+w,y+h,YELLOW);
+}
+void dda(int x1,int x2,int y1, int y2)
+{
+	int i,dx,dy,m,steps,x,y;
+	float xinc,yinc;
+
+	dx=x2-x1;
+	dy=y2-y1;
+
+
+	steps=(abs(dy)>abs(dx))?abs(dy):abs(dx);
+
+	xinc=dx/steps;
+	yinc=dy/steps;
+
+	x=x1;
+	y=y1;
+
+	for(i=1;i<=steps;i++)
+	{
+		plotpixels(x,y);
+		x=x+xinc;
+		y=y+yinc;
+	}
+}
+
+void main()
+{
+	int gd=DETECT,gm,x1,y1,x2,y2,w,h;
+
+	initgraph(&gd,&gm,"C:\\TURBOC3\\BGI");
+
+	printf("DDA LINE DRAWING ALGORITHM\n");
+	printf("Enter the starting coordinates of the line");
+	scanf("%d%d",&x1,&y1);
+	printf("Enter the ending coordinates of the line");
+	scanf("%d%d",&x2,&y2);
+
+	h=getmaxy();
+	w=getmaxx();
+	setcolor(WHITE);
+	line(0,h/2,w,h/2);
+	line(w/2,0,w/2,h);
+
+	dda(x1,x2,y1,y2);
+	getch();
+	closegraph();
+}
+	
